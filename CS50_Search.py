@@ -1,10 +1,10 @@
 # 
 class Node:
-    def __init__(self, state, parent, actions, pathCost):
+    def __init__(self, state, parent = None, actions = None, pathCost = 1):
         self.state = state
         self.parent = parent
-        self.actions
-        self.pathCost
+        self.actions = actions
+        self.pathCost = pathCost
 
 class FrontierExplored:
     def __init__(self):
@@ -19,7 +19,7 @@ class FrontierExplored:
     def containsState(self, state):
         return any(node.state == state for node in self.frontier)
 
-    def empty(self):
+    def isEmpty(self):
         return len(self.frontier) == 0
     
     # Pop first element
@@ -37,12 +37,33 @@ class FrontierExplored:
         return node
 
 class Maze:
-    def __init__(self,maze,start,goal):
+    def __init__(self,maze):
+        
+        if len(maze) <= 0:
+            raise Exception("maze must be a 2D-ARRAY")
+        else:
+            if len(maze) != len(maze[0]):
+                raise Exception("maze must be a quadratic 2D-ARRAY")
+        if not any('A' in row for row in maze):
+            raise Exception("maze must have exactly one START point")
+        if not any('B' in row for row in maze):
+            raise Exception("maze must have exactly one END point")
+
         self.maze = maze
         self.startState = start
         self.goalState = goal
         self.width = None
         self.height = None
+
+    def createMazeOfNodes(self,mazeArr):
+        mazeOfNodes = []
+        mazeRow = []
+
+        coords = [(r, c) for r, row in enumerate(mazeArr) 
+          for c, val in enumerate(row) Node([(r, c)])]
+
+        
+
     
     def getWidth(self):
         if self.width == None:
